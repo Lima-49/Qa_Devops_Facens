@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuário</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+          margin-top: 50px;
+        }
+        .plano-banner {
+          border: 1px solid #ccc;
+          padding: 20px;
+          text-align: center;
+          cursor: pointer;
+        }
+        .plano-banner:hover {
+          background-color: #7cb0ff;
+        }
+        .plano-banner.selected {
+            background-color: #7cb0ff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Cadastro de Usuário</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="plano-banner" id="planoBasico">
+                <h3>Plano Básico</h3>
+                <p>R$ 50,00/mês</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="plano-banner" id="planoPremium">
+                <h3>Plano Premium</h3>
+                <p>R$ 100,00/mês</p>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <form id="cadastroForm">
+        <div class="form-group">
+            <label for="usuario">Usuário:</label>
+            <input type="text" class="form-control" id="usuario" placeholder="Digite o usuário" required>
+        </div>
+        <div class="form-group">
+            <label for="senha">Senha:</label>
+            <input type="password" class="form-control" id="senha" placeholder="Digite a senha" required>
+        </div>
+        <input type="hidden" id="planoSelecionado" name="plano" value="">
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Capturar clique nos banners de plano
+        $("#planoBasico").click(function() {
+            $("#planoSelecionado").val("basico");
+
+            // Adicionar classe 'selected' ao banner de plano básico
+            $("#planoBasico").addClass("selected");
+
+            // Remover classe 'selected' do banner de plano premium
+            $("#planoPremium").removeClass("selected");
+        });
+
+        $("#planoPremium").click(function() {
+            $("#planoSelecionado").val("premium");
+
+            // Adicionar classe 'selected' ao banner de plano premium
+            $("#planoPremium").addClass("selected");
+
+            // Remover classe 'selected' do banner de plano básico
+            $("#planoBasico").removeClass("selected");
+
+        });
+
+        // Capturar envio do formulário
+        $("#cadastroForm").submit(function(event) {
+            event.preventDefault();
+
+            // Capturar dados do formulário
+            var usuario = $("#usuario").val();
+            var senha = $("#senha").val();
+            var plano = $("#planoSelecionado").val();
+
+            // Enviar requisição AJAX para o backend
+            $.ajax({
+                type: "POST",
+                url: "/alunos/cadastro",
+                data: {
+                    userName: usuario,
+                    userPsw: senha,
+                    tipoPlano: plano
+                },
+                success: function(response) {
+                    alert("Aluno cadastrado com sucesso!");
+                    // Você pode redirecionar o usuário para outra página ou fazer outras ações aqui
+                },
+                error: function(xhr, status, error) {
+                    alert("Erro ao cadastrar aluno: " + error);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

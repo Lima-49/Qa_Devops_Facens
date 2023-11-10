@@ -6,11 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="validDomain" />
+        <module name="praticandoAPI" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="atdd_project3" target="11" />
+      <module name="educacao-gamificada" target="17" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="educacao-gamificada" options="-parameters" />
+      <module name="praticandoAPI" options="-parameters" />
+    </option>
   </component>
 </project>
